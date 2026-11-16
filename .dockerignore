@@ -1,5 +1,6 @@
 *
 !app.py
-!download_model.py
+!model/
+!model/**
 !requirements.txt
 !Dockerfile

@@ -6,7 +6,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
-      - name: Build Docker image
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+      - name: Download latest model
         env:
           DAGSHUB_TOKEN: ${{ secrets.DAGSHUB_TOKEN }}
-        run: docker build --no-cache --secret id=dagshub_token,env=DAGSHUB_TOKEN -t mlflow-api .
+        run: |
+          pip install mlflow-skinny==3.18.0
+          python download_model.py
+      - name: Build Docker image
+        run: docker build -t mlflow-api .
